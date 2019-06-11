@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.cl01{
+			color: red;
+		}
+		.cl02{
+			background-color: gray;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function() {
+//			var pClassName = $('p').attr('class');
+////			console.log(classNmae);
+//			
+//			$('h1').attr('class',pClassName);
+			
+			//클래스를 추가하는 하기
+			//여러개를 한번에 추가도 가능
+//			$('h1').addClass({'cl01','cl02'});
+//			$('h1').addClass('cl02');
+			
+			//클래스 제거하기
+			//여러개를 한번에 제거도 가능
+//			$('h1').removeClass('cl02');
+//			$('h1').removeClass({'cl01','cl02'});
+			
+//			//toggle클래스
+//			$('h1').toggleClass('cl01');
+			$('h1').toggleClass('cl01');
+		})
+	</script>
+</head>
+
+<body>
+	<h1>class 속성</h1>
+	<p class="cl02">클래스 속성을 부여& 제거</p>
+	<ul>
+		<li class="cl01">item1</li>
+		<li >item2</li>
+		<li >item3</li>
+		<li class="cl01">item4</li>
+		<li class="cl01">item5</li>
+	</ul>
+</body></html>

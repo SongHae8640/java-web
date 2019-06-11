@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<style type="text/css">
+		h1 {
+			background-color: aqua;
+			color: black;
+		}
+
+		p {
+			color: gray;
+			font-size: 20px;
+		}
+
+		ul {
+			padding: 0px;
+		}
+
+		ul>li:nth-child(2n) {
+			color: blue;
+		}
+
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function() {
+			getCss();
+			setCss();
+
+		});
+
+
+		function setCss() {
+			//css(속성명, 값) 을 통해서 css값을 set 해줄 수 있다
+			// 특정명으로, #으로, rgb값으로 도 다 가능
+			$('p').css('color', 'red');
+			$('p').css('color', '#0000ff');
+			$('p').css('color', 'rgb(0,255,0)');
+			//			$('p').css('font-size', 30); //value값으로 String이 아닌 Number형도 가능 > 안에서는 typeof로 검사를 하기 때문에
+			//		$('p').css('font-size','30px');//문자열로 사요하려면 단위까지 써줘야 함
+
+
+			//properties로 하면 인자 하나로 줄 수 있음
+			//키 : value 의 형식으로
+			// 콤마(,) 를 통해 여러가지 성질을 세팅 가능
+			$('p').css({
+				'font-size': 50,
+				'color': 'black'
+			});
+
+			//두번째 인자로 function도 가능
+			$('li').css('color', func01);
+
+			//css의 스타일 그래도 사용할 것
+			$('h1').css('background-color', 'gray');
+
+		};
+
+		var arr = [
+			'rgb(0,0,0)',
+			'rgb(10,0,30)',
+			'rgb(40,50,0)',
+			'rgb(0,80,90)',
+			'rgb(100,0,120)',
+			'rgb(130,140,0)'
+		];
+
+		//idx는 해당 함수를 호출한 ele의 순서(0부터)
+		//value는 함수를 호출한 함수의 return값(여기에선 css의 font-size 값)
+		function func01(idx, value) {
+			//여기에서 this는 element 자기 자신
+			console.log(idx, value);
+
+
+			$(this).css('color', arr[idx]).css('font-size', 10 * (idx + 1) + 'px');
+		}
+
+		function getCss() {
+			//편하게 css 값을 가져올 수 있음
+			//내가 지정한 타입으로 나오는건 아님 예시에서 aqua처럼
+			console.log("jquery :: " + $('h1').css('background-color'));
+
+			//js로는 어렵다. js로는 속성을 직접 부여함으로서 사용
+			var h1Ele = document.querySelector('h1');
+			console.log("querySelector :: " + h1Ele.style.backgroundColor); //css로 속성을 표시하기 때문에 아무것도 없음
+			h1Ele.style.backgroundColor = 'red';
+			console.log("querySelector :: " + h1Ele.style.backgroundColor); //css가 아닌 element의 스타일 속성을 set 했기 때문에 
+
+			//다음과 같이 배열 형태로 자료를 요청할 수 있음
+			$('h1').css(['background-color', 'color']);
+		};
+
+	</script>
+</head>
+
+<body>
+	<h1>css 메서드</h1>
+	<p>스타일 제어</p>
+	<ul>
+		<li>menu1</li>
+		<li>menu2</li>
+		<li>menu3</li>
+		<li>menu4</li>
+		<li>menu5</li>
+		<li>menu6</li>
+	</ul>
+</body>
+
+</html>
