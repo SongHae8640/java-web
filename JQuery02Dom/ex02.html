@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+//			getLi();
+//			chaining();
+//			filterFind();
+//			forEach();
+			
+			htmlText();
+//			append();
+			
+			
+			
+		})
+		
+		function append(){
+			//체이닝을 사용하여 기존값에 누적
+			$('p').next().filter('ul').append('<li>new01</li>');
+			//어제 했던 방식
+			$('p').next('ul').html($('p').next('ul').html()+'<li>new01</li>');
+			//appendTo를 사용한 방식
+			$('<li>new02</li>').appendTo('p+ul')
+			
+			이 두개의 퍼포먼스가 전혀 다름
+			li를 선택하고 이를 p+ul에 옴기는 작업
+			$('li').appendTo('p+ul');
+			$('p+ul').append($('li'));	//이것과 같은 겱
+			
+			p+ul에 li(li태그 아님,textnode)을 넣음
+			$('p+ul').append('li');
+		}
+		
+		function forEach(){
+			var arr = document.querySelectorAll('li')
+			//첫번째 인자가 element,두번째가 idx
+			arr.forEach(function(ele,idx){
+				console.log(idx,ele);
+			})
+			
+			//jquery에선s 첫번째 인자가 idx, 두번째 인자가 ele
+			//세번째 인자는 없음
+			$('li').each(function(idx,ele){
+				//ele는 jquery 객체가 아님. node객체임
+				
+				console.log(idx,ele);
+			})
+			$('li').each(function(){
+				//ele(두번째 param)가 this와 같음
+				//param을 안받아도 됨
+				console.log(this);
+			})
+			$('li').each(function(idx){
+				//idx랑 같이 쓰고 싶다면 인자를 하나만 받아도 됨
+				console.log(idx,this);
+			})
+		};
+		
+		function htmlText(){
+			$('p').next('ul').children().html('<a href="#">link</a>')
+			
+			$('p').next('ul').children().html(function(idx,old){
+				$(this).html('new'+idx);
+			})
+			
+			$('p').next('ul').children().html(function(idx,old){
+				$(this).html(old+'->new'+idx);
+			})
+			
+			
+			///text 여기 다시 해볼것 **
+			$('p').next('ul').next().children().text(function(idx,old){
+				$(this).html(old+'->new'+idx);
+			})
+		};
+		
+		function filterFind(){
+			//상위 선택자에서 필터
+			$('li').filter(':even');
+			
+			//하위 선택자에서 필터
+			$('li').find(':even');
+		};
+		
+		function chaining(){
+			//h2를 추가한뒤 $('h1,h2') 한것과 같다
+			//체이닝 가능
+			$('h1').add('h2');
+			$('h1').css('color','red').add('h2').css('background-color','gray')
+			
+			//하위 노드를 찾고 그 아래것을 컨트롤
+			$('li').find('ul>li:eq(1)').css('color','red')
+			
+			//h2를 추가하면 h1, h2 ,h2 총 3개가 잡히는데 h1을 뻬고 컨트롤 하겠다.
+			$('h1').add('h2').not('h1');
+		}
+		
+		function getLi(){
+			//list3-1이 잡힘
+			$('ul>li:eq(4)')
+			
+			//위에 있는 li만 잡고 싶을때는 
+			$('p+ul>li:eq(1)')
+			
+			//아래있는 li만 잡고 싶을때는
+			$('li>ul>li:eq(0)')
+			
+			//첫번째 li만 잡고 싶을때
+			$('li').first();
+			$('li').eq(0);
+		}
+	</script>
+</head>
+<body>
+	<h1>제목1</h1>
+	<p>내용2</p>
+	<h2>제목2</h2>
+	<p>내용2</p>
+	<h2>제목2</h2>
+	<p>내용2</p>
+	<ul>
+		<li>item1</li>
+		<li>item2</li>
+		<li>item3</li>
+		<li>item4</li>
+	</ul>
+	
+	<ol>
+		<li>list1</li>
+		<li>list2</li>
+		<li>list3
+			<ul>
+				<li>list3-1</li>
+				<li>list3-2</li>
+				<li>list3-3</li>
+				<li>list3-4</li>
+			</ul>
+		</li>
+		<li>list4</li>
+	</ol>
+</body>
+</html>

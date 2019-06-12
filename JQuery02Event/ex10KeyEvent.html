@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css"></style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+//			$('input').keydown(keyEvent);
+//			$('input').keypress(keyEvent);
+			$('textarea').keyup(copyText);
+		})
+		
+		function copyText(){
+			//this는 해당 함수가 일어난 대상
+//			console.log(this);
+			
+			//이해 안감 다른 replace 볼것**
+			var msg = $(this).val();
+			while(msg.indexOf('\n')!=-1){
+				msg = msg.replace('\n','</br>');
+			}
+			$(this).next('div').html(msg);
+		}
+		
+		function keyEvent(e){
+			//event의 target은 this(함수가 일어난 대상)
+//			console.log(e.target==this);
+			
+			//어떤 key이벤트가 일어났는지.
+			//ex) keyup, keydown 등등
+			console.log("e.type :: "+e.type)
+			
+			//대소문자 구분 안함. 대문자 기준으로
+			//keypress에서는 구분 함
+			console.log("e.which :: "+e.which)			
+		}
+	</script>
+</head>
+<body>
+	<h1>키보드 이벤트</h1>
+	<input type="text">
+	<textarea></textarea>
+	<div>
+		
+	</div>
+	<div>
+		<div></div>
+	</div>
+</body>
+</html>
