@@ -1,0 +1,14 @@
+-git init : 시작
+
+-git remote : 원격 저장소를 보여줌
+ git remote -v : 원격 저장소의 이름과 주소를 보여줌
+ git remote add <이름> <주소> : <주소>의 원격 저장소를 연결(추가) <이름>이라는 별명을 부여하겠다.
+	이름을 달리해서 해당 별명의 주소로 보낼 수 있다.
+	origin은 기본적으로 있는 원격 저장소를 의미
+ git remote remove <이름> : <이름>의 주소를 제거하겠다.
+ git remote --help : remote의 기능들을 보여줌
+
+-git push -u origin master : 로컬 저장소를 기준으로 보낼때 사용한다.
+				체크아웃되어 있는 로컬 저장소 의브랜치를 origin의 주소에 master로 동기화 
+				-u 는 한번만 하면 된다. 다음부터는 push만 하면 해당 주소로
+ 
