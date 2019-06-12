@@ -14,4 +14,26 @@
 
 -git commit -m 'message' : commit 할때 메세지를 준다.
  git commit -am 'message' : 파일이 commit 된 후 다시 새 버전을 만들 경우, ??? add message 인것 같은데 일단 넘어감
+
+-git pull : 원격 저장소의 내용을 내려 받을때
+
+-git stash : git pull을 했을때 다른 사람의 commit과 충돌이나는 경우가 발생한다. 그 경우에 사용하고 다시 git pull을하면 정상 작동됨
+	해당 메세지는 다음과 같았다.
+	$ git pull
+	remote: Enumerating objects: 5, done.
+	remote: Counting objects: 100% (5/5), done.
+	remote: Compressing objects: 100% (1/1), done.
+	remote: Total 3 (delta 2), reused 3 (delta 2), pack-reused 0
+	Unpacking objects: 100% (3/3), done.
+	From https://github.com/SongHae8640/java-web
+	   19717f0..c32a658  master     -> origin/master
+	error: Your local changes to the following files would be overwritten by merge:
+	        summaryGit.txt
+	Please commit your changes or stash them before you merge.
+	Aborting
+	Updating 19717f0..c32a658
+
+
+
+	
  
