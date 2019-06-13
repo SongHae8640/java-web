@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>mvc01</display-name>
+  <welcome-file-list>
+  	<!-- 특정 주소가 없다면 다음의 주소에서 실행해라.(우선순위는 위가 높다) -->
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet-mapping>
+  	<servlet-name>ex01</servlet-name>
+  	<url-pattern>/ex01.html</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+ 	<servlet-name>ex03</servlet-name>
+  	<url-pattern>/ex03.html</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+ 	<servlet-name>ex03</servlet-name>
+  	<url-pattern>/ex03.jsp</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ex04</servlet-name>
+  	<url-pattern>/ex04.bit</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 서블릿을 통한다면 mapping을 통해 ex01을 실행하려고 하면 해당 주소를 찾다 보니
+  com.bit.test01.Ex01로 가게 된다. -->
+  <servlet>
+  	<servlet-name>ex01</servlet-name>
+  	<servlet-class>com.bit.test01.Ex01</servlet-class>
+  </servlet>  
+  
+  <!-- 하나의 url-pattern에 다양한 name이 들어올 수 있다 
+  		but, 하나의 name에 여러 class는 올 수 없다.-->
+    <servlet>
+  	<servlet-name>ex03</servlet-name>
+  	<servlet-class>com.bit.test01.Ex03</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ex04</servlet-name>
+  	<servlet-class>com.bit.test01.Ex04</servlet-class>
+  </servlet>
+  
+  
+  
+  
+  <!-- 서버를 시작할때 참고 하기 때문에 수정하면 서버 reset 할 것 -->
+</web-app>
