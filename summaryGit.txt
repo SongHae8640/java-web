@@ -8,12 +8,23 @@
  git remote remove <이름> : <이름>의 주소를 제거하겠다.
  git remote --help : remote의 기능들을 보여줌
 
+-git add <파일> : 해당 파일을 staged 상태로 만든다.
+
+-git commit -m <msg> : commit 할때 메세지를 준다.
+ git commit -am <msg> : 파일이 commit 된 후 다시 새 버전을 만들 경우, ??? add message 인것 같은데 일단 넘어감
+ git commit -amend <msg> : commit 메세지를 잘못 적은 경우 메세지를 변경 한다.
+
+
+-git reset HEAD <파일> : add 했던 파일을 취소 한다.
+ git reset --soft HEAD^ : commit을 취소하고 해당 파일을 staged 상태로 working dir에 보존한다.
+ git reset --mixed HEAD^ : commit을 취소하고 해당 파일을 unstaged상태로 working dir에 보존한다.
+ git reset HEAD^ : 위와 동일
+ git reset HEAD~<number> : number갯수 만큼 commit을 취소
+ git reset --hard HEAD^ : commit을 취소하고 해당 파일을 unstaged 상태로 working dir에서 삭제
+
 -git push -u origin master : 로컬 저장소를 기준으로 보낼때 사용한다.
 				체크아웃되어 있는 로컬 저장소 의브랜치를 origin의 주소에 master로 동기화 
 				-u 는 한번만 하면 된다. 다음부터는 push만 하면 해당 주소로
-
--git commit -m 'message' : commit 할때 메세지를 준다.
- git commit -am 'message' : 파일이 commit 된 후 다시 새 버전을 만들 경우, ??? add message 인것 같은데 일단 넘어감
 
 -git pull : 원격 저장소의 내용을 내려 받을때
 
