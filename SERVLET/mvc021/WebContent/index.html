@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css"/>
+<style type="text/css">
+	body>div{
+		width: 800px;
+		margin: 0px auto;
+	}
+	#header>h1{
+		background-image: url("imgs/logo.png");
+		background-repeat: no-repeat;
+		width: 248px;
+		height: 70px;
+		text-indent: -999px;
+	}
+	#menu{
+		background-color: #aaaaaa;
+		height: 40px;
+	}
+	#menu>ul{
+		padding: 0px;
+		margin: 0px auto;
+		width: 404px;
+	}
+	#menu>ul>li{
+		width: 100px;
+		height: 40px;
+		list-style: none;
+		float: left;
+		margin-right: 1px;
+		background-color: gray;
+		text-align: center;
+		line-height: 40px;
+		color:white;
+	}
+	#menu>ul>li>a{
+		width: 100px;
+		height: 40px;
+		display: inline-block;
+		text-decoration: none;
+		color:white;
+	}
+	#menu>ul>li:hover{
+		background-color: red;
+	}
+	#menu>ul>li>ol{
+		position: relative;
+		padding: 0px;
+		list-style-type: none;
+		z-index: 100;
+	}
+	#menu>ul>li>ol>li{
+		background-color: #aaaaaa;
+		border-top-color: white;
+		border-top-width: 1px;
+		border-top-style: solid;
+	}
+	#menu>ul>li>ol>li>a{
+		text-decoration: none;
+		display: block;
+		color:white;
+	}
+	#menu>ul>li>ol>li>a:hover{
+		background-color: red;
+	}
+	#content{
+		clear: both;
+	}
+	#content>table{
+		border-collapse: collapse;
+		border:1px solid gray;
+		width: 80%;
+		margin: 0px auto;
+	}
+	#content>table tr{}
+	#content>table tr>th{
+		border:1px solid gray;
+	}
+	#content>table tr>td:nth-child(1){
+		width: 100px;
+	}
+	#content>table tr>td:nth-child(3){
+		width: 100px;
+	}
+	#content>table tr>td:nth-child(4){
+		width: 100px;
+	}
+	#content>table tr>th:nth-child(5){
+		display: none;
+	}
+	#content>table tr>td:nth-child(5){
+		display: none;
+	}
+	#content>table tr>td{
+		border:1px solid gray;
+	}
+	#content .edit{
+		display: none;
+	}
+	
+	#content form{}
+	#content form>div{}
+	#content form>div>label{
+		width: 20%;
+		display: inline-block;
+		background-color: #aaaaaa;
+	}
+	#content form>div>input{
+		width: 70%;
+	}
+	#content form>div>textarea{
+		width: 90%;
+		height: 150px;
+	}
+	
+</style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+<script type="text/javascript">
+	var index,bbsBtn1,bbsBtn2;
+	var temp;
+	$(document).ready(function(){
+		$('#menu>ul>li>ol').hide();
+		$('#menu>ul>li').eq(1).mouseenter(function(){
+			$('#menu>ul>li>ol').stop(true).slideDown();
+		}).mouseleave(function(){
+			$('#menu>ul>li>ol').stop(true).slideUp();
+		});
+		$('#bx').bxSlider();
+		bbsBtn1=$('#menu ol>li>a').eq(0);
+		bbsBtn2=$('#menu ol>li>a').eq(1);
+		bbsBtn1.click(getList);
+		bbsBtn2.click(function(){
+			var msg='<h1>입력 페이지</h1>';
+			$('#content').html(msg);
+			var ele=$('<form action="add.html" method="post"></form>').appendTo('#content');
+			ele.append('<div><label for="sub">제목</label><input type="text" name="sub" id="sub"/></div>');
+			ele.append('<div><label for="name">이름</label><input type="text" name="name" id="name"/></div>');
+			ele.append('<div><textarea name="content"></textarea></div>');
+			ele.append('<div><button>입력</button></div>');
+			ele.submit(addlist);
+			return false;
+		});
+		index=$('#content').html();
+		$('#menu>ul>li>a').eq(0).click(function(){
+			$('#content').html(index);
+			return false;
+		});
+		
+		$(document).on('click','tbody>tr',function(){
+			var num=$(this).find('td').eq(0).text();
+			var sub=$(this).find('td').eq(1).text();
+			var name=$(this).find('td').eq(2).text();
+			var nalja=$(this).find('td').eq(3).text();
+			var content=$(this).find('td').eq(4).text();
+			console.log(num,sub,content,name,nalja);
+			var msg="";
+			msg+='<h1>상세 페이지</h1>';
+			msg+='<form>';
+			msg+='<div>';
+			msg+='<label for="num">글번호</label>';
+			msg+='<span>'+num+'</span>';
+			msg+='<input type="hidden" name="num" id="num" value="'+num+'"/>';
+			msg+='</div>';
+			msg+='<div>';
+			msg+='<label for="name">글쓴이</label>';
+			msg+='<span>'+name+'</span>';
+			msg+='</div>';
+			msg+='<div>';
+			msg+='<label for="nalja">날짜</label>';
+			msg+='<span>'+nalja+'</span>';
+			msg+='</div>';
+			msg+='<div>';
+			msg+='<label for="sub">제목</label>';
+			msg+='<span>'+sub+'</span>';
+			msg+='<input class="edit" type="text" name="sub" id="sub" value="'+sub+'"/>';
+			msg+='</div>';
+			msg+='<div>';
+			msg+='<span>'+content+'</span>';
+			msg+='<textarea class="edit">'+content+'</textarea>';
+			msg+='</div>';
+			msg+='<div class="edit"><button>수정</button></div>';
+			msg+='</form>';
+			
+			
+			$('#content').html(msg);
+			//$('.edit').css('display','none');
+			
+			$('<button>수정</button>').click(function(){
+				//$('form input,textarea,form>div').removeClass('edit');
+				$('.edit').css('display','block').prev('span').hide();
+				$('#content>h1').text('수정 페이지');
+				$(this).hide();
+			}).appendTo('#content');
+		});  
+	}); 
+	
+	function getList(){
+		//alert('list page');
+		jQuery.get('list.xml',function(data){
+			console.log(data);
+			$('#content').html('<h1>리스트페이지</h1>');
+			$('<table></table>').appendTo('#content').append('<tr><th>글번호</th><th>제목</th><th>이름</th><th>날짜</th><th>안보일곳</th></tr>');
+			$(data.children[0].children).each(function(idx,ele){
+				var num=$(ele).find('num').html();
+				var sub=$(ele).find('sub').html();
+				var content=$(ele).find('content').html();
+				var name=$(ele).find('name').html();
+				var nalja=$(ele).find('nalja').html();
+				$('#content>table').append('<tr><td>'
+						+num+'</td><td>'+sub+'</td><td>'
+						+name+'</td><td>'+nalja+'</td><td>'
+						+content+'</td></tr>');
+			});
+		});
+		return false;
+	}
+	function addlist(){
+		$('.err').remove();
+		var sub=$('#content form input').eq(0).val();
+		var name=$('#content form input').eq(1).val();
+		var content=$('#content form textarea').val();
+		if(sub.trim()==''){
+			$('#content form input').eq(0).after('<span class="err">제목없음</span>');
+		}else if(name.trim()==''){
+			$('#content form input').eq(1).after('<span class="err">이름없음</span>');
+		}else{
+		$.post('add.html','sub='+sub+'&name='+name+'&content='+content,function(){
+			getList();
+		});
+		}
+		return false;
+	}
+</script>
+</head>
+<body>
+	<div>
+		<div id="header">
+			<h1>비트교육센터</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="#">HOME</a></li>
+				<li>
+					게시판
+					<ol>
+						<li><a href="#">list</a></li>
+						<li><a href="#">add</a></li>
+					</ol>
+				</li>
+				<li><a href="#">로그인</a></li>
+				<li><a href="#">방명록</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<div id="bx">
+				<img alt="main" title="1번째 이미지" src="imgs/b01.jpg"/>
+				<img alt="main" title="2번째 이미지" src="imgs/b02.jpg"/>
+				<img alt="main" title="3번째 이미지" src="imgs/b03.jpg"/>
+				<img alt="main" title="4번째 이미지" src="imgs/b04.jpg"/>
+				<img alt="main" title="5번째 이미지" src="imgs/b05.jpg"/>
+				<img alt="main" title="6번째 이미지" src="imgs/b06.jpg"/>
+			</div>
+		</div>
+		<div id="footer">
+		Copyright &copy; 비트캠프 All rights reserved.
+		</div>
+	</div>
+</body>
+</html>

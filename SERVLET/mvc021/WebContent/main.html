@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	table{
+		border-collapse: collapse;
+		border: 1px solid red;
+		width: 800px;
+	}
+	table>tbody{}
+	table>tbody>.oddTr{
+		background-color: yellow;
+	}
+	table>tbody>tr{}
+	table>tbody>tr>td{
+		border: 1px solid red;
+	}
+</style>
+<script type="text/javascript" src ="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#menu>a').eq(0).click(function(){
+			/*
+			$.get("list.json",function(data){
+				console.log(data);
+			});
+			
+			//마지막 인자는 data type
+			$.get("list.json",function(data){
+				console.log(data);
+			},"json");
+			
+			*/
+			
+			$('#content').html("<table></table>");
+			$('<thead><tr><th>글번호</th><th>이름</th><th>제목</th><th>날짜</th></tr></thead>').appendTo("#content>table");
+			
+			/*
+			//인자를 안넣어도 되는 get방식
+			////json은 get방식, post는 없다
+			$.getJSON("list.json",function(data){
+				data.root.forEach(function(ele, idx){
+					var trClass ="";
+					if(idx%2==1) trClass="oddTr";
+					$('<tr class='+trClass+'></tr>').append("<td>"+ele.num+"</td>")
+					.append("<td>"+ele.sum+"</td>")
+					.append("<td>"+ele.name+"</td>")
+					.append("<td>"+ele.nalja+"</td>")
+					.appendTo("#content>table");
+				});
+			})
+			*/
+			
+			// https://api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
+			//getJSON의 기본은 ajax와 같다
+			// https://api.jquery.com/jQuery.ajax/#jQuery-ajax-url-settings
+			$.ajax({
+				method : "get",
+				url :'list.json',	//cors 정책으로 내가 만든 정보와 남이 만든 정보를 구분(동일ip와 동일port번호로 출처 구분)
+				dataType : "json",	//contentType을 설정 안했다면 해줘야 한다.
+				data: "id=admin",
+				success:function(data){
+					console.log(data);
+				},
+				error : function(jqXHR, textStatus, errorThrown){	// $.ajax를 쓰는 이유!
+					console.log("jqXHR.readyState :: "+jqXHR.readyState);	//XHR 객체를 이용하여 에러 이유를 알 수 있다.
+				}
+				//contentType : // form 태그의 enctype와 같은 기능, 데이터를 주고 받을때 수정해야한다.
+			});
+			
+			
+			
+			return false;
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<div>
+		<div id="menu">
+			<a href="#">list</a>
+			<a href="#">add</a>
+		</div>
+		<div id="content">
+			<img alt="" src="imgs/main.jpg"/>
+		</div>
+	</div>
+	
+	<!-- enctype의 default 값이 있다. -->
+	<form action="" method="post" enctype="application/x-www-form-urlencoded"></form>
+</body>
+</html>
