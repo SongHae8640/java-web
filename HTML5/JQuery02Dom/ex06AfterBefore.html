@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+			// 참고 https://api.jquery.com/category/manipulation/dom-insertion-outside/
+			
+			
+			//js의 outerHTML과 비슷한 기능
+			
+			
+//			$('ul').after('<h2>add1</h2>')
+//			$('ul').before('<h2>add2</h2>')
+//			
+//			$('<h2>add3</h2>').insertAfter('ul');
+//			$('<h2>add4</h2>').insertBefore('ul');
+			
+			
+			
+			//체이닝 아래 둘은 다름. 
+			//$('ul').after('<h2>add1</h2>').before('<h2>add2</h2>');
+			//$('<h2>add3</h2>').insertAfter('ul').insertBefore('ul');
+			
+//			$('ul>li').after(function(idx){
+//				$(this).after('<li>'+(idx+1)+'</li>');
+//			})
+			
+			//1.10 이후로 인자 2개도 가능
+			$('ul>li').after(function(idx,old){
+				$(this).after('<li>'+old+(idx+1)+'</li>');
+			})
+		})
+	</script>
+</head>
+<body>
+	<h1>before & after</h1>
+	<ul>
+		<li>item1</li>
+		<li>item2</li>
+		<li>item3</li>
+		<li>item4</li>
+	</ul>
+	<ol>
+		<li>item1</li>
+		<li>item2</li>
+		<li>item3</li>
+		<li>item4</li>
+	</ol>
+</body>
+</html>

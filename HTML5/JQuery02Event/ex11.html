@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.err{
+			color: red;
+			
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		//ready는 structure 가 어느정도 구성 되어 있을때 = 준비되어 있을때
+		
+		
+		//load는 ready 다음 시점
+		$('document').load(function(){
+			
+		})
+			
+		
+		//load는 2종류, 통신에서의 load와 이벤트에서의 load
+		//일반적으로 load는 통신에서만 씀
+		
+		//$('document').ready(function(){})와 동일한 작동
+		$(function(){
+			
+		});
+		
+		$('document').ready(function(){
+			
+			$('input').eq(0).focusin(function(){
+				if($(this).val()=="id를 입력"){
+					$(this).val("");
+				}
+				$('.err').remove();
+			}).focusout(function(){
+				if($(this).val()==""){
+					$(this).val("id를 입력");
+				}
+				
+				//size 검사
+				if($(this).val().length<6){
+					$(this).after('<span class="err">6자리 이상 입력하시오</span>')
+				}
+			})
+			
+			$('input').eq(2).focusout(function(){
+				if($('input').eq(1).val() !=$(this).val()){
+					$(this).after('<span class="err">비밀번호가 같아야 합니다.</span>')
+				}else{
+					
+				}
+			})
+			
+			$('form').submit(function(){
+				
+				
+				//위의 focus 익명함수에 return값을 줘서 사용
+				
+				//페이지 이동을 막음
+				return false
+			});
+		})
+	</script>
+</head>
+
+<body>
+	<h1>회원가입</h1>
+	<form action="">
+		<div>
+			<label for="id">id</label>
+			<input type="text" id="id" value="id를 입력">
+		</div>
+		<div>
+			<label for="pw">pw</label>
+			<input type="password" id="pw">
+		</div>
+		<div>
+			<label for="re">re</label>
+			<input type="password" id="re">
+		</div>
+		<div>
+			<input type="checkbox" id="ch1">
+			<label for="">ch1</label>
+			<input type="checkbox" id="ch2">
+			<label for="">ch2</label>
+			<input type="checkbox" id="ch3">
+			<label for="">ch3</label>
+		</div>
+		<div>
+			<input type="radio"  id="ra1">
+			<label for="">item1</label>
+			<input type="radio"  id="ra2">
+			<label for="">item2</label>
+			<input type="radio"  id="ra13">
+			<label for="">item3</label>
+		</div>
+		<button>제출</button>
+	</form>
+</body></html>
