@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/jquery.bxslider.css">
+	<style type="text/css"></style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+	<script type="text/javascript">
+		var bx;
+		
+		// https://bxslider.com/install/
+		// 키와 값의 자료형을 유의하면서 사용
+		$('document').ready(function() {
+			bx = $('.slider').bxSlider({
+				/*
+				//옵션 선택 https://bxslider.com/options/
+				mode: 'fade',
+				auto: true,
+				pause :2000,
+				maxSlides : 3,
+				minSlides : 2,
+				slideWidth : 320,
+				speed : 1000,	//애니메이션의 스피드
+				slideMargin : 10,
+				autoControls: true,
+				stopAutoOnClick: true,
+				pager: true,
+				captions :true,
+				controls : true,
+				prevSelector : $('#myPrev'),
+				prevText : '[이전]',
+				nextSelector : $('#myNext'),
+				nextText : '[이후]'
+				*/
+			});
+			
+			
+			//이런식으로 슬라이드 이동도 가능하다.
+			bx.goToSlide(1);
+			bx.getCurrentSlide()
+		})
+		
+		
+	</script>
+</head>
+
+<body>
+	<div class="slider">
+		<div><img title="img01" src="imgs/s01.jpg"></div>
+		<div><img title="img02" src="imgs/s02.jpg"></div>
+		<div><img title="img03" src="imgs/s03.jpg"></div>
+		<div><img title="img04" src="imgs/s04.jpg"></div>
+		<div><img title="img05" src="imgs/s05.jpg"></div>
+		<div><img title="img06" src="imgs/s06.jpg"></div>
+	</div>
+	<a id="myPrev" href="#"></a>
+	<a id="myNext" href="#"></a>
+
+</body></html>

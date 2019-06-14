@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#target{
+			width: 50px;
+			height: 50px;
+			background-image: url(imgs/ball.jpg);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			position: relative;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+			//애니메이션을 체이닝 했을때의 구조
+			//이후의 애니메이션을 queue에 넣어 하나씩 꺼내면서 동작한다.
+			//때문에 stop을 하면 프로세스 중인 애니메이션이 stop하고 다음 queue에 있는 애니메이션이 동작한다.
+			//finish는 queue를 다 내보내기 때문에 초기 상태로 돌아간다.	
+			
+			//jqeury API Doc - https://api.jquery.com/animate/#animate-properties-duration-easing-complete
+			$('button').eq(0).click(function(){
+				//js에서는 '' 또는 "" 처리를 안해도 됨(하는걸 권장)
+				//json에서는 ""로 해야만 함
+				//css의 style에 해당하는 키 value, 
+				//움직임의 처음과 끝만 결정
+				$('#target').animate({"left":"300px"},1000).animate({"top":"200px"},1000).animate({"left":"0px","top":"0px"});
+				
+//				propertyAni();
+						
+				//delay : 해당 애니메이션 이후 지연을 갖음
+//				delayAni()
+				
+				//dequeue 뒤의 2개의 애니메이션을 묶어 버림
+//				dequeueAni();
+				
+			});
+			
+			$('button').eq(1).click(function(){
+				//target에 해당하는 모든 애니메이션이 finish된다.
+				$('#target').finish();
+			})
+			$('button').eq(2).click(function(){
+				//일시 정지같은 기능
+				//다시 animate를 실행하면 기존에 목표지점까지만 간다(정지 시점이 기준점이 되는 것이 아니라)
+				//target에 해당하는 모든 애니메이션이 stop하는 것이 아니라 해당 시점에서의 애니메이션만 stop
+				//$('#target').stop();
+				
+				realStop3Way()
+			})
+		})
+		
+		function propertyAni(){
+			$('#target').animate({"left":"400px"},{
+				duration : 1000,
+				
+				//animation = 움직이는 자신,progress = 진행정도 (0.0~1.0),remainMs =  남은 양
+				progress : function(animation, progress, remainingMs){
+					console.log(animation, progress, remainingMs);
+				}
+			})
+		}
+		
+		function delayAni(){
+			//delay : 해당 애니메이션 이후 지연을 갖음
+			$('#target').animate({"left":"300px"},1000).delay(3000).animate({"top":"200px"},1000).animate({"left":"0px","top":"0px"});
+		}
+		
+		function dequeueAni(){
+			//dequeue 뒤의 2개의 애니메이션을 묶어 버림
+			$('#target').animate({"left":"300px"},1000).dequeue().animate({"top":"200px"},1000).animate({"left":"0px","top":"0px"});
+		}
+		
+		//현재 애니메이션에서 중지하는 3가지 방법
+		function realStop3Way(){
+			//방법 1
+			//애니메이션이 여러가지 일때 그 애니메이션 수 많큼 stop해줘야 정지함
+//			$('#target').stop().stop().stop();
+			
+			//방법 2
+			//대기하고 있는 큐를 비우고 해당 애니메이션 중지
+//			$('#target').clearQueue().stop();
+			
+			//방법 3
+			//stop()의 첫번째 인자가 clearQueue이기 때문에 true를 주면 된다.
+			//https://api.jquery.com/stop/#stop-clearQueue-jumpToEnd
+			$('#target').stop(true);
+		}
+	</script>
+</head>
+
+<body>
+	<h1>애니메이션</h1>
+	<button>start</button>
+	<button>end</button>
+	<button>stop</button>
+	<div id="target"></div>
+</body></html>

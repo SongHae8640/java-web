@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div>div {
+			margin: 0px auto;
+			width: 800px;
+		}
+
+		#menu {}
+
+		#menu>ul {
+			width: 400px;
+			padding: 0px;
+			margin: 0px auto;
+		}
+
+		#menu>ul>li {
+			list-style: none;
+			float: left;
+			width: 100px;
+			height: 35px;
+			background-color: gray;
+			color: white;
+			text-align: center;
+		}
+
+		#menu>ul>li>ol {
+			padding: 0px;
+			position: relative;
+			top: 13px;
+		}
+
+		#menu>ul>li>ol>li {
+			list-style: none;
+			width: 100px;
+			height: 35px;
+			background-color: gray;
+		}
+
+		#content {
+			clear: both;
+		}
+
+		#content>div {
+			width: 300px;
+			height: 100px;
+			overflow: hidden;
+			margin: 0px auto;
+		}
+
+		#content>div>div {
+			position: relative;
+			width: 700px;
+		}
+
+		#content>div>div>img {
+			width: 100px;
+		}
+
+		#footer {
+			clear: both;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		var source;
+		$('document').ready(function() {
+			source = $('#content>div>div').clone();
+
+			//hide sub menu
+			$('#menu ol').hide();
+
+			//When the mouse is over the sub menu
+			$('#menu>ul>li').mouseenter(function() {
+				$(this).find('ol').stop().slideDown(500);
+			}).mouseleave(function() {
+				$(this).find('ol').stop(true).slideUp(500);
+			});
+
+			//			$('#content>div').append(source);
+			setInterval(nextImg, 2000);
+		})
+
+		function nextImg() {
+			$('#content>div>div').animate({ "left": '-100px'}, 1000, function() {
+				var ele = $('#content>div>div').children().first();
+				$('#content>div>div').append(ele);
+				$('#content>div>div').css({"left": '0px'});
+			});
+		}
+	</script>
+</head>
+
+<body>
+
+	<div>
+		<div id="header">
+			<h1>Title</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li>menu1
+					<ol>
+						<li>menu1-1</li>
+						<li>menu1-2</li>
+						<li>menu1-3</li>
+						<li>menu1-4</li>
+					</ol>
+
+				</li>
+				<li>menu2
+					<ol>
+						<li>menu2-1</li>
+						<li>menu2-2</li>
+						<li>menu2-3</li>
+						<li>menu2-4</li>
+					</ol>
+				</li>
+				<li>menu3
+					<ol>
+						<li>menu3-1</li>
+						<li>menu3-2</li>
+						<li>menu3-3</li>
+						<li>menu3-4</li>
+					</ol>
+				</li>
+				<li>menu4
+					<ol>
+						<li>menu4-1</li>
+						<li>menu4-2</li>
+						<li>menu4-3</li>
+						<li>menu4-4</li>
+					</ol>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div>
+				<div>
+					<img src="imgs/s01.jpg" alt="s">
+					<img src="imgs/s02.jpg" alt="s">
+					<img src="imgs/s03.jpg" alt="s">
+					<img src="imgs/s04.jpg" alt="s">
+					<img src="imgs/s05.jpg" alt="s">
+					<img src="imgs/s06.jpg" alt="s">
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			Copyright &copy; 비트캠프 All rights reserved.
+		</div>
+	</div>
+</body></html>

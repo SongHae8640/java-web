@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css">
+	<style type="text/css">
+		#content>div>div {
+			display: inline-block;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+	<script>
+		//제약이 다른 plugin 보다 적어 자유도는 높으나 문제 발생 가능성 또한 높다.
+		//멀티 스레드에서는 문제 발생할 수 있으니, callback을 통해서 이벤트를 물리는 방식을 택하는걸 추천
+		var big, thumb;
+		$(function() {
+			big = $('#big').bxSlider({
+				minSlides: 1,
+				maxSlides: 1,
+				slideWidth: 400,
+				pager: false,
+			});
+
+			thumb = $('#thumb').bxSlider({
+				mode: 'vertical',
+				minSlides: 4,
+				maxSlides: 4,
+				slideWidth: 100,
+				pager: false,
+				controls: false,
+				auto: true,
+				pause: 1000,
+				moveSlides: 1,
+				touchEnabled: false, //크롬에서 문제 생기는걸 방지
+				onSlideBefore: function() {
+					var idx = thumb.getCurrentSlide();
+					console.log(idx);
+					big.goToSlide(idx);
+				}
+			});
+
+			$('#thumb>div>a>img').click(function() {
+				var thumbSlideNum = $(this).attr('alt');
+				thumb.goToSlide(thumbSlideNum - 1);
+				big.goToSlide(thumbSlideNum - 1)
+				return false;
+			})
+		})
+	</script>
+</head>
+
+<body>
+	<div>
+		<div id="head">
+			<h1>비트 교육센터</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="#">menu1</a></li>
+				<li><a href="#">menu2</a></li>
+				<li><a href="#">menu3</a></li>
+				<li><a href="#">menu4</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			<div>
+				<div id="big">
+					<img alt="" src="imgs/b01.jpg">
+					<img alt="" src="imgs/b02.jpg">
+					<img alt="" src="imgs/b03.jpg">
+					<img alt="" src="imgs/b04.jpg">
+					<img alt="" src="imgs/b05.jpg">
+					<img alt="" src="imgs/b06.jpg">
+				</div>
+				<div id="thumb">
+					<div><a><img alt="1" src="imgs/s01.jpg"></a></div>
+					<div><a><img alt="2" src="imgs/s02.jpg"></a></div>
+					<div><a><img alt="3" src="imgs/s03.jpg"></a></div>
+					<div><a><img alt="4" src="imgs/s04.jpg"></a></div>
+					<div><a><img alt="5" src="imgs/s05.jpg"></a></div>
+					<div><a><img alt="6" src="imgs/s06.jpg"></a></div>
+				</div>
+			</div>
+
+
+		</div>
+		<div id="footer">
+			Copyright &copy; bitcamp All rights reserved.
+		</div>
+	</div>
+</body></html>
