@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>mvc03</display-name>
+  <welcome-file-list>
+    <welcome-file>index.bit</welcome-file>
+  </welcome-file-list>
+  
+  <servlet-mapping>
+  	<servlet-name>ex03</servlet-name>
+  	<url-pattern>/ex03.jsonp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>index</servlet-name>
+  	<url-pattern>/index.bit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>list</servlet-name>
+  	<url-pattern>/list.bit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>add</servlet-name>
+  	<url-pattern>/add.bit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>detail</servlet-name>
+  	<url-pattern>/detail.bit</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>edit</servlet-name>
+  	<url-pattern>/edit.bit</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>delete</servlet-name>
+  	<url-pattern>/delete.bit</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 		mapping과 serlvet 구분			 -->
+  
+  <servlet>
+  	<servlet-name>ex03</servlet-name>
+  	<servlet-class>com.bit.util.Ex03</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>index</servlet-name>
+  	<servlet-class>com.bit.controller.IndexController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>list</servlet-name>
+  	<servlet-class>com.bit.controller.ListController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>add</servlet-name>
+  	<servlet-class>com.bit.controller.AddController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>detail</servlet-name>
+  	<servlet-class>com.bit.controller.DetailController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>edit</servlet-name>
+  	<servlet-class>com.bit.controller.EditController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>delete</servlet-name>
+  	<servlet-class>com.bit.controller.DeleteController</servlet-class>
+  </servlet>
+  
+</web-app>

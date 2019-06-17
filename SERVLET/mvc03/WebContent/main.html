@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+	/*
+		$(document).ready(function(){
+			alert('asd');
+			$.ajax({
+				url : "http://127.0.0.1:8080/mvc03/ex03.jsonp?callback=?",
+				method : "get",
+				dataType : "jsonp",
+				jsonpCallback : 'myJsonp',	//servlet으로 받을 데이터 이름, 지정해주지 않으면 timeStamp값으로 값이 계속 바뀜
+				success : function(data){
+					 console.log(data);
+				}
+			})
+			
+		})
+	*/
+	
+	//jsonp통신은 js를 통한 콜백 통신 방법
+	//규약 회피를 위해 만든 방법이라 요즘은 안씀
+	function myJsonp(data){
+		console.log(data)
+	}
+		
+	</script>
+	<script type="text/javascript" src="ex02.jsonp"></script>
+</head>
+<body>
+	<h1>jsonp 통신</h1>
+</body>
+</html>

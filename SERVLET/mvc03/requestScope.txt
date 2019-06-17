@@ -1,0 +1,13 @@
+client가 서버에 요청 하고 응답을 받음
+
+client와 관련된 정보를 request객체에 여러 정보를 담에서 전달
+	접근하는 순간 req와 resp객체가 생김
+	
+	
+forward  : 들어온 요청을 client에 보내지 않고 view로 보냄. view가 res가 보내게 
+
+page 
+
+requestdispatcher : https://dololak.tistory.com/502
+ 
+Spring mvc2  생명주기 : https://linuxism.ustd.ip.or.kr/453
