@@ -1,3 +1,5 @@
+hello 
+
 -git init : 시작
 
 -git remote : 원격 저장소를 보여줌
