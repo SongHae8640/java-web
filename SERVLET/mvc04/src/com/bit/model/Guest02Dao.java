@@ -1,4 +1,27 @@
 package com.bit.model;
+/**
+ * -Connection Pool
+ * 커넥션 객체를 프로그램이 실행될 때마다 생성되는 JDBC 프로그래밍의 문제점을 개선하기 위해
+ * 웹 애플리케이션이 서비스되기 전에 웹 서버에서 미리 생성하여 준비한 다음, 필요한 커넥션을 사용한다.
+ * 
+ * -DataSource
+ * 커넥션 풀의 커넥션을 관리하기 위한 객체
+ * 커넥션의 획득, 반납 등의 작업을 한다.
+ * JNDI Server를 통해서 이용한다.
+ * lookup을 통해서 DataSource 객체 획득 
+ * 	> DataSource의 getConnection을 통해 커넥션풀에서 free상태의 커넥션풀 획득
+ * 	> 획득한 커넥션 객체를 통해 dbms 수행
+ * 	> 끝나면 커넥션풀에 커넥션 반납 
+ * 
+ * -JNDI(Java Naming and Directory Interface)
+ * 디렉터리 서비스에서 제공하는 데이터 및 객체를 발견(discover)하고 참고(lookup)하기 위한 자바 api
+ * 자바 애플리케이션을 외부 디렉터리 서비스에 연결
+ * 자바 애플릿이 호스팅 웹 컨테이너가 제공하는 구성정보를 참고
+ * 
+ * https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html 에서 옵션을 보고 Servers의 tomcat에 context.xml 에 추가시킬것
+ * Servers에 context.xml에 해당 내용을 넣었기 때문에 환경이 달라지면 안됨 > 이후에 프레임워크를 이용해서도 가능
+ * */
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,27 +34,27 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
+
 public class Guest02Dao {
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	DataSource source;	//인터페이스로 의존주입(ioc) 뒤에 스프링에서 배우게 될 것
-	//톰켓이 Resource 를 지정해 놓으면 connection 객체를 준비함 이 객체와 war에서 생성된 connection을 연결
-	//
-	
-	////// Context가 무엇인지 찾아볼것 ***
-	//Servlet을 상속받은 객체는 getServletContext를 통해서 context를 가져올 수 있지만 dao는 아니기 때문에 
-	//
-	
+	DataSource source;	
 	
 	//반복되는 connection을 생성자를 통해 해결
 	public Guest02Dao(){
 		try {
-			InitialContext init = new InitialContext();
-			 Context context = (Context)init.lookup("java:/comp/env");
-			 this.source = (DataSource) context.lookup("jdbc/oracle");	//context.xml 에 있는 Resourc 에서 설정한 name으로 lookup
-
+			//커넥션 풀에 접근하기 위해 JNDI를 사용해야한다. JNDI는 서버에서 관리하는 리소스 정보 객체를 반환한다.
+			//JNDI 서버 역활을 하는 객체를 생성, 리소스가 로컬에 있기 때문에 InitialContext만 생성하면 된다.
+			InitialContext ic = new InitialContext();	
+			
+			// lookup는 리소스를 찾은후 Object객체를 반환 해준다.
+			// 인자로 찾으려는 리소스의 등록된 이름을 지정한다.
+			// java:/comp/env 는 WAS인 톰캣에서 리소스를 관리하는 가상 디렉터리
+			// jdbc/oracle은 찾으려는 리소스의 이름
+			this.source = (DataSource)ic.lookup("java:/comp/env/jdbc/oracle");//context.xml 에 있는 Resource 에서 설정한 name으로 lookup
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,26 +65,6 @@ public class Guest02Dao {
 		ArrayList<Guest02Dto> list = new ArrayList<Guest02Dto>();
 		String sql = "SELECT g.num,g.sub,g.pay,u.name as uname";
 				sql+= " FROM user02 u, guest02 g WHERE u.num=g.unum ORDER BY g.num DESC";
-	
-		
-		//connection pool
-		// 1.동시접속이 들어 왔을때 오류를 내는 것이 아니라
-		// 접속을 보류 해서 앞 사람의 접속이 끝나면 그때 들어가게
-		// 2. 접속할때 마다 연결하고 끊고 하는 것이 아니라 접속 객체를 만들어 놔서 이에 연결 하게		
-		//https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html 에서 옵션을 보고 Servers의 tomcat에 context.xml 에 추가시킬것
-		//Servers에 context.xml에 해당 내용을 넣었기 때문에 환경이 달라지면 안됨 > 이후에 프레임워크를 이용해서도 가능
-		// 기능 요구서에서 env에서 idle에 대한 내용을 써둘것 
-		
-				
-//		try {
-//			InitialContext init = new InitialContext();
-//			 Context context = (Context)init.lookup("java:/comp/env");
-//			 source = (DataSource) context.lookup("jdbc/oracle");	//context.xml 에 있는 Resourc 에서 설정한 name으로 lookup
-//
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		try {
 			conn = source.getConnection();
@@ -76,15 +79,13 @@ public class Guest02Dao {
 				list.add(bean);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			try {
 				if(rs!=null) rs.close();
 				if(pstmt!=null) pstmt.close();
-				if(conn!=null) conn.close();	//maxidle 보다 클때 반환 될것 임
+				if(conn!=null) conn.close();	//maxidle 보다 클때 반환 된다.
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -94,18 +95,6 @@ public class Guest02Dao {
 
 	public void insert(String sub, int unum, int pay) {
 		String sql ="INSERT INTO guest02 VALUES(guest02_seq.nextval,?,?,SYSDATE,?)";
-		
-		source = null;
-		
-//		//getList와는 다른 방식으로 해보자.
-//		try {
-//			InitialContext init = new InitialContext();
-//			source = (DataSource) init.lookup("java:/comp/env/jdbc/oracle");	//한번에 lookup하기
-//		} catch (NamingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
 		try {
 			conn = source.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -114,14 +103,12 @@ public class Guest02Dao {
 			pstmt.setInt(3, pay);
 			int result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			try {
 				if(pstmt!=null) pstmt.close();
 				if(conn!=null) conn.close();	
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
