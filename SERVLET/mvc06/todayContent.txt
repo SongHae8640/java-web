@@ -1,0 +1,16 @@
+up&download
+	www.servlets.com > cos > cos.zip 
+	
+파일 업로드 다운로드
+
+ajax를 이용한 업 다운 로드
+
+erwin : 가상에서	
+
+클래스 다이어그램 https://gmlwjd9405.github.io/2018/07/04/class-diagram.html
+클래스 다이어그램을 제출할때는 변수명 x, tool로 만들어서 사용할 때는 적어야 함
+관계에서 화살표 방향에 유의하면서 작성할것
+tools > java > generate 하면 구조를 java 파일로
+		reverse 하면 java 파일을 구조로
+	시퀀스 다이어 그램 : 시간에 따른 동적 작업 흐름 (http://staruml.sourceforge.net/docs/user-guide(ko)/ch05_3.html)
+		각 시나리오 마다 한장씩
